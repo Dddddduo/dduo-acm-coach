@@ -23,20 +23,24 @@ user-invocable: true
 
 ## 二、题库仓库位置（写死，不可改）
 
-题库根目录：**`/Users/dduo/IdeaProjects/Dodo-agent/acm-training/`**（git 已跟踪，远程 `git@github.com:Bhu-Acm/Dodo-agent.git`，分支 `Dduo`）。
+题库是独立仓库 `dduo-acm-coach`。本地根目录：**`/Users/dduo/acm-coach/`**（git 已跟踪，远程 `git@github.com:Dddddduo/dduo-acm-coach.git`，分支 `main`）。
 
 ```
-acm-training/
-├── README.md            # 题库总览 + 使用说明 + 统计
-├── 知识点索引.md          # 知识点 → 题目 双向索引(核心入口)
-├── 错题本.md              # 标注做错/没做出来的题,集中复习
-└── 题目归档/
-    └── <知识点分类>/
-        └── <题目标题>.md   # 每道题一个文件
+~/acm-coach/              # = 仓库 dduo-acm-coach 的根
+├── SKILL.md              # skill 本体(本文件)
+└── acm-training/         # 题库
+    ├── README.md            # 题库总览 + 使用说明 + 统计
+    ├── 知识点索引.md          # 知识点 → 题目 双向索引(核心入口)
+    ├── 错题本.md              # 标注做错/没做出来的题,集中复习
+    └── 题目归档/
+        └── <知识点分类>/
+            └── <题目标题>.md   # 每道题一个文件
 ```
+
+**注意**：本 SKILL.md 在 `~/.claude/skills/acm-coach/SKILL.md`（本机加载用）和 `~/acm-coach/SKILL.md`（仓库版）各有一份，内容保持一致。改档时**优先改仓库版 `~/acm-coach/SKILL.md`**，如需同步本机加载版再复制。
 
 **归档规则**：
-- 每道题一个独立 md 文件，放在对应知识点分类目录下（分类不存在就新建）。
+- 每道题一个独立 md 文件，放在 `~/acm-coach/acm-training/题目归档/<分类>/` 下（分类不存在就新建）。
 - 每次归档后：更新 `知识点索引.md` + `README.md` 统计，有错题就更新 `错题本.md`。
 - 归档完成必须执行 git 提交并推送（见「归档模板」）。
 
@@ -95,7 +99,7 @@ acm-training/
 
 ## 四、归档模板（讲完必须归档）
 
-每道题讲完后，把内容整理成 md 文件写入题库，并**自动 git 提交推送**。
+每道题讲完后，把内容整理成 md 文件写入题库仓库 `~/acm-coach/`，并**自动 git 提交推送**。
 
 ### 单题文件格式 `题目归档/<分类>/<标题>.md`
 
@@ -130,15 +134,16 @@ acm-training/
 
 ### 归档执行步骤（必须走完）
 
-1. 用 **Write** 写入单题文件到 `acm-training/题目归档/<分类>/`。
-2. 用 **Edit** 更新 `acm-training/知识点索引.md`（在对应知识点下追加这一题，附链接）。
-3. 用 **Edit** 更新 `acm-training/README.md`（题目总数 / 分类统计）。
-4. 若本题没做出来或做错，用 **Edit** 在 `acm-training/错题本.md` 追加一条。
-5. **git 提交推送**（在 `/Users/dduo/IdeaProjects/Dodo-agent` 下执行）：
+1. 用 **Write** 写入单题文件到 `~/acm-coach/acm-training/题目归档/<分类>/`。
+2. 用 **Edit** 更新 `~/acm-coach/acm-training/知识点索引.md`（在对应知识点下追加这一题，附链接）。
+3. 用 **Edit** 更新 `~/acm-coach/acm-training/README.md`（题目总数 / 分类统计）。
+4. 若本题没做出来或做错，用 **Edit** 在 `~/acm-coach/acm-training/错题本.md` 追加一条。
+5. **git 提交推送**（工作目录 `~/acm-coach`）：
    ```bash
+   cd ~/acm-coach
    git add acm-training/
    git commit -m "题库: <题目> - <知识点>"
-   git push origin Dduo
+   git push origin main
    ```
    > 用户要求自动提交+推送，全程无需再确认。如果 push 失败（网络/认证），如实报告结果，不要假装成功。
 
